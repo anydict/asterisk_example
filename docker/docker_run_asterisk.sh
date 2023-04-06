@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Run instance with number 2 with version image Asterisk 18.1.1
-# bash docker_run_asterisk.sh 2 18.1.1
+# Run instance with number 2 with version image Asterisk 20.2.0
+# bash docker_run_asterisk.sh 2 20.2.0
 
 if [ -z "$1" ]; then
   instance_name=asterisk_extapi-0
@@ -17,13 +17,21 @@ else
   version=$2
 fi
 
-/run/host/bin/docker stop "$instance_name"
-/run/host/bin/docker rm "$instance_name"
+if [ -f "/usr/bin/docker" ]; then
+  docker_path="/usr/bin/docker"
+elif [ -f "/run/host/bin/docker" ]; then
+  docker_path="/run/host/bin/docker"
+else
+  echo "No found docker in /usr/bin/docker or /run/host/bin/docker" && exit 0
+fi
+
+${docker_path} stop "$instance_name"
+${docker_path} rm "$instance_name"
 
 host_conf_path="/etc/$instance_name" && mkdir -p "/etc/$instance_name"
 host_logs_path="/var/log/$instance_name" && mkdir -p "/var/log/$instance_name"
 
-/run/host/bin/docker run \
+${docker_path} run \
   -d \
   --restart=always \
   --net=host \
@@ -31,6 +39,4 @@ host_logs_path="/var/log/$instance_name" && mkdir -p "/var/log/$instance_name"
   -v "$host_conf_path":/etc/asterisk \
   -v /tmp/:/tmp/ \
   --name "$instance_name" \
-  asterisk20v5:latest
-  #anydict/asterisk:"$version"
-
+  anydict/asterisk20ubuntu22:"$version"

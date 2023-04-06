@@ -62,6 +62,8 @@ RUN set -ex; \
     menuselect/menuselect --disable chan_unistim menuselect.makeopts; \
     menuselect/menuselect --disable chan_console menuselect.makeopts; \
     menuselect/menuselect --disable chan_audiosocket menuselect.makeopts; \
+    menuselect/menuselect --disable cel_manager menuselect.makeopts; \
+    menuselect/menuselect --disable cel_custom menuselect.makeopts; \
     menuselect/menuselect --disable res_geolocation menuselect.makeopts; \
     menuselect/menuselect --disable res_fax  menuselect.makeopts; \
     menuselect/menuselect --disable res_xmpp menuselect.makeopts; \
@@ -78,7 +80,6 @@ RUN set -ex; \
     menuselect/menuselect --disable res_smdi menuselect.makeopts; \
     menuselect/menuselect --disable res_sorcery_memory_cache menuselect.makeopts; \
     menuselect/menuselect --disable res_calendar_ews menuselect.makeopts; \
-    menuselect/menuselect --disable res_tonedetect menuselect.makeopts; \
     menuselect/menuselect --disable res_calendar_icalendar menuselect.makeopts; \
     menuselect/menuselect --disable res_http_media_cache menuselect.makeopts; \
     menuselect/menuselect --disable res_calendar_exchange menuselect.makeopts; \
@@ -200,14 +201,15 @@ RUN set -ex; \
 FROM ubuntu:22.04
 RUN set -ex; \
     apt-get update; \
-    apt-get -y install debconf-utils; \
+    apt-get install -y --no-install-recommends debconf-utils; \
     echo "libvpb1 libvpb1/countrycode string 7"     | debconf-set-selections; \
     echo "tzdata tzdata/Areas select Europe"        | debconf-set-selections; \
     echo "tzdata tzdata/Zones/Europe select Moscow" | debconf-set-selections; \
     echo "Europe/Moscow" > /etc/timezone; \
     export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true; \
-    apt-get -y install libedit2 libjansson4 libsqlite3-0 libuuid1 libxml2  \
-                       libxslt1.1 liburiparser1 libgsm1 libcurl4; \
+    apt-get install -y --no-install-recommends  \
+       libedit2 libjansson4 libsqlite3-0 libuuid1 libxml2  \
+       libxslt1.1 liburiparser1 libgsm1 libcurl4; \
     apt-get clean && rm -rf /var/lib/{apt,dpkg,cache,log};
 
 COPY --from=builder /var/spool/asterisk /var/spool/asterisk
@@ -215,13 +217,15 @@ COPY --from=builder /var/lib/asterisk /var/lib/asterisk
 COPY --from=builder /var/run/asterisk /var/run/asterisk
 COPY --from=builder /usr/lib/asterisk /usr/lib/asterisk
 COPY --from=builder /etc/asterisk /etc/asterisk
+COPY --from=builder /usr/sbin/asterisk /usr/sbin/asterisk
+COPY --from=builder /usr/sbin/safe_asterisk /usr/sbin/safe_asterisk
 
 COPY --from=builder /usr/lib/libasteriskssl.so.1 /usr/lib/libasteriskssl.so.1
 COPY --from=builder /usr/lib/libasteriskssl.so /usr/lib/libasteriskssl.so
 
 COPY --from=builder /usr/lib/libasteriskpj.so.2 /usr/lib/libasteriskpj.so.2
 COPY --from=builder /usr/lib/libasteriskpj.so /usr/lib/libasteriskpj.so
+RUN ln -s /usr/sbin/asterisk /usr/sbin/rasterisk
 
-COPY --from=builder /usr/sbin/ /usr/sbin/
 
 CMD [ "asterisk", "-f" ]
