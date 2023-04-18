@@ -229,5 +229,8 @@ RUN set -ex; \
     wget "http://asterisk.hosting.lv/bin/codec_g729-ast180-gcc4-glibc-x86_64-core2-sse4.so"  \
     -O /usr/lib/asterisk/modules/codec_g729.so;
 
+# if need curl for Global Web
+# RUN set -ex; \
+#     apt-get install -y --no-install-recommends ca-certificates;
 
 CMD [ "asterisk", "-f" ]
