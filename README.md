@@ -6,12 +6,8 @@ https://hub.docker.com/r/anydict/asterisk20ubuntu22
 
 
 Easy way for run docker image:
-<code>
-bash docker/docker_run_asterisk.sh 0
-</code>
+<code>bash docker/docker_run_asterisk.sh 0</code>
 
 Put configs in the directory:
-<code>
-cp config/* /etc/asterisk_docker-0/ && docker restart asterisk_docker-0
-</code>
+<code>cp config/* /etc/asterisk_docker-0/ && docker restart asterisk_docker-0</code>
 
