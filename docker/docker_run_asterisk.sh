@@ -30,6 +30,8 @@ ${docker_path} rm "$instance_name"
 
 host_conf_path="/etc/$instance_name" && mkdir -p "/etc/$instance_name"
 host_logs_path="/var/log/$instance_name" && mkdir -p "/var/log/$instance_name"
+host_custom_sounds="/var/lib/asterisk/sounds/en/custom" && mkdir -p /var/lib/asterisk/sounds/en/custom
+host_custom_moh="/var/lib/asterisk/moh" && mkdir -p /var/lib/asterisk/sounds/en/custom
 
 ${docker_path} run \
   -d \
@@ -37,6 +39,8 @@ ${docker_path} run \
   --net=host \
   -v "$host_logs_path":/var/log/asterisk/ \
   -v "$host_conf_path":/etc/asterisk \
+  -v "$host_custom_sounds":"$host_custom_sounds" \
+  -v "$host_custom_moh":"$host_custom_moh" \
   -v /tmp/:/tmp/ \
   --name "$instance_name" \
   anydict/asterisk20ubuntu22:"$version"
