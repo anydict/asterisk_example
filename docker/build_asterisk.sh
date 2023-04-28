@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Сборка контейнера Asterisk 20.2.0
+# Build image Asterisk 20.2.0
 
 version=20.2.0
 
