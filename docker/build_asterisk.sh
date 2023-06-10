@@ -6,6 +6,5 @@ version=20.2.0
 
 echo Build docker of Asterisk, version: ${version}
 
-docker build -t anydict/asterisk:${version} \
--f Dockerfile .
+docker build -t anydict/asterisk:${version} -f Dockerfile .
 
