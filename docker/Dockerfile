@@ -1,4 +1,4 @@
-FROM anydict/asterisk20ubuntu22:20.2.0
+FROM anydict/asterisk20ubuntu22:20.5.0
 
 LABEL maintainer=anydict
 
