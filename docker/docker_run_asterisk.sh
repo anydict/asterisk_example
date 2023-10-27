@@ -11,7 +11,7 @@ else
 fi
 
 if [ -z "$2" ]; then
-  version=20.2.0
+  version=20.5.0
   # echo "No version" && exit 0
 else
   version=$2
