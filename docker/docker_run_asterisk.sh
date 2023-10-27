@@ -28,10 +28,10 @@ fi
 ${docker_path} stop "$instance_name"
 ${docker_path} rm "$instance_name"
 
-host_conf_path="/etc/$instance_name" && mkdir -p $host_conf_path
-host_logs_path="/var/log/$instance_name" && mkdir -p $host_logs_path
-host_custom_sounds="/var/lib/asterisk/sounds/en/custom" && mkdir -p $host_custom_sounds
-host_custom_moh="/var/lib/asterisk/moh" && mkdir -p $host_custom_moh
+host_conf_path="/etc/$instance_name" && mkdir -p "$host_conf_path"
+host_logs_path="/var/log/$instance_name" && mkdir -p "$host_logs_path"
+host_custom_sounds="/var/lib/asterisk/sounds/en/custom" && mkdir -p "$host_custom_sounds"
+host_custom_moh="/var/lib/asterisk/moh" && mkdir -p "$host_custom_moh"
 
 if [ ! -f "/etc/$instance_name/modules.conf" ]; then
   echo '[modules]' >> "/etc/$instance_name/modules.conf"
