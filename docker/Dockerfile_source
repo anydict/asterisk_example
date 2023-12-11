@@ -96,8 +96,6 @@ RUN set -ex; \
     menuselect/menuselect --disable pbx_spool menuselect.makeopts; \
     menuselect/menuselect --disable pbx_loopback menuselect.makeopts; \
     menuselect/menuselect --disable pbx_dundi menuselect.makeopts; \
-    menuselect/menuselect --disable bridge_builtin_interval_features menuselect.makeopts; \
-    menuselect/menuselect --disable bridge_holding menuselect.makeopts; \
     menuselect/menuselect --disable func_env menuselect.makeopts; \
     menuselect/menuselect --disable func_speex menuselect.makeopts; \
     menuselect/menuselect --disable func_srv menuselect.makeopts; \
@@ -130,8 +128,6 @@ RUN set -ex; \
     menuselect/menuselect --disable app_test menuselect.makeopts; \
     menuselect/menuselect --disable app_festival menuselect.makeopts; \
     menuselect/menuselect --disable app_disa menuselect.makeopts; \
-    menuselect/menuselect --disable app_bridgewait menuselect.makeopts; \
-    menuselect/menuselect --disable app_bridgewait menuselect.makeopts; \
     menuselect/menuselect --disable app_mf menuselect.makeopts; \
     menuselect/menuselect --disable app_dictate menuselect.makeopts; \
     menuselect/menuselect --disable app_signal menuselect.makeopts; \
@@ -140,8 +136,6 @@ RUN set -ex; \
     menuselect/menuselect --disable app_mp3 menuselect.makeopts; \
     menuselect/menuselect --disable app_directed_pickup menuselect.makeopts; \
     menuselect/menuselect --disable app_morsecode menuselect.makeopts; \
-    menuselect/menuselect --disable app_controlplayback menuselect.makeopts; \
-    menuselect/menuselect --disable app_bridgeaddchan menuselect.makeopts; \
     menuselect/menuselect --disable app_sendtext menuselect.makeopts; \
     echo "disable all pjsip"; \
     menuselect/menuselect --disable chan_pjsip menuselect.makeopts; \
