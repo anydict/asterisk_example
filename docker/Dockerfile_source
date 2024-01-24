@@ -1,7 +1,7 @@
 FROM ubuntu:22.04 AS builder
 
 ENV DEBIAN_FRONTEND="noninteractive"
-ENV AST_VERSION 20.5.0
+ENV AST_VERSION 20.6.0-rc1
 
 RUN set -ex; \
     apt-get update; \
@@ -15,8 +15,6 @@ RUN set -ex; \
     wget "https://github.com/asterisk/asterisk/archive/refs/tags/${AST_VERSION}.tar.gz"; \
     tar xvf ${AST_VERSION}.tar.gz; \
     cd asterisk-${AST_VERSION}*/; \
-    echo "This replace for https://github.com/asterisk/asterisk/issues/394"; \
-    wget "https://raw.githubusercontent.com/asterisk/asterisk/95162c55bde727a7aff40e1e65d85931f33292fa/res/ari/resource_channels.c" -O res/ari/resource_channels.c; \
     ./configure; \
     make menuselect/menuselect menuselect-tree menuselect.makeopts; \
     menuselect/menuselect --disable BUILD_NATIVE menuselect.makeopts; \
