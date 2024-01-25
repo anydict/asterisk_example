@@ -1,7 +1,7 @@
 FROM ubuntu:22.04 AS builder
 
 ENV DEBIAN_FRONTEND="noninteractive"
-ENV AST_VERSION 20.6.0-rc1
+ENV AST_VERSION 20.6.0
 
 RUN set -ex; \
     apt-get update; \
@@ -10,7 +10,7 @@ RUN set -ex; \
         build-essential pkg-config \
         wget subversion bzip2 patch \
         libedit-dev libjansson-dev libsqlite3-dev uuid-dev libxml2-dev  \
-        libcurl4-openssl-dev libxslt1.1 liburiparser1 libgsm1; \
+        libcurl4-openssl-dev libxslt1.1 liburiparser1 libgsm1 ; \
     cd /usr/src; \
     wget "https://github.com/asterisk/asterisk/archive/refs/tags/${AST_VERSION}.tar.gz"; \
     tar xvf ${AST_VERSION}.tar.gz; \
@@ -188,7 +188,7 @@ RUN set -ex; \
     make samples; \
     make config; \
     apt-get remove -y --purge --auto-remove build-essential software-properties-common lib*dev; \
-    rm -rf /var/lib/apt/lists/*; \
+    apt-get clean && rm -rf /var/lib/{apt,dpkg,cache,log}; \
     rm -rf /usr/src/${AST_VERSION}* && rm -rf /usr/src/asterisk*;
 
 
