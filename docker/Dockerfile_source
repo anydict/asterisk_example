@@ -10,12 +10,12 @@ RUN set -ex; \
         build-essential pkg-config \
         wget subversion bzip2 patch \
         libedit-dev libjansson-dev libsqlite3-dev uuid-dev libxml2-dev  \
-        libcurl4-openssl-dev libxslt1.1 liburiparser1 libgsm1 ; \
+        liburiparser1 libgsm1 libcurl4-openssl-dev; \
     cd /usr/src; \
     wget "https://github.com/asterisk/asterisk/archive/refs/tags/${AST_VERSION}.tar.gz"; \
     tar xvf ${AST_VERSION}.tar.gz; \
     cd asterisk-${AST_VERSION}*/; \
-    ./configure; \
+    ./configure --disable-xmldoc --without-libxslt --without-dahdi ; \
     make menuselect/menuselect menuselect-tree menuselect.makeopts; \
     menuselect/menuselect --disable BUILD_NATIVE menuselect.makeopts; \
     menuselect/menuselect --enable codec_g729a menuselect.makeopts; \
@@ -198,7 +198,7 @@ RUN set -ex; \
     export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true; \
     apt-get install -y --no-install-recommends  \
        wget tzdata libedit2 libjansson4 libsqlite3-0 libuuid1 libxml2  \
-       libxslt1.1 liburiparser1 libgsm1 libcurl4; \
+       liburiparser1 libgsm1 libcurl4; \
     apt-get clean && rm -rf /var/lib/{apt,dpkg,cache,log};
 
 COPY --from=builder /var/spool/asterisk /var/spool/asterisk
@@ -206,19 +206,27 @@ COPY --from=builder /var/lib/asterisk /var/lib/asterisk
 COPY --from=builder /var/run/asterisk /var/run/asterisk
 COPY --from=builder /usr/lib/asterisk /usr/lib/asterisk
 COPY --from=builder /etc/asterisk /etc/asterisk
-COPY --from=builder /usr/sbin/asterisk /usr/sbin/asterisk
-COPY --from=builder /usr/sbin/safe_asterisk /usr/sbin/safe_asterisk
 
-COPY --from=builder /usr/lib/libasteriskssl.so.1 /usr/lib/libasteriskssl.so.1
-COPY --from=builder /usr/lib/libasteriskssl.so /usr/lib/libasteriskssl.so
+COPY --from=builder /usr/sbin/astcanary \
+                    /usr/sbin/astdb2bdb \
+                    /usr/sbin/astdb2sqlite3 \
+                    /usr/sbin/asterisk \
+                    /usr/sbin/astgenkey \
+                    /usr/sbin/astversion \
+                    /usr/sbin/autosupport \
+                    /usr/sbin/rasterisk \
+                    /usr/sbin/safe_asterisk \
+                    /usr/sbin/
 
-COPY --from=builder /usr/lib/libasteriskpj.so.2 /usr/lib/libasteriskpj.so.2
-COPY --from=builder /usr/lib/libasteriskpj.so /usr/lib/libasteriskpj.so
+COPY --from=builder /usr/lib/libasteriskssl.so.1 \
+                    /usr/lib/libasteriskssl.so \
+                    /usr/lib/libasteriskpj.so.2 \
+                    /usr/lib/libasteriskpj.so \
+                    /usr/lib/
 
 ENV TZ Europe/Moscow
 RUN set -ex; \
     echo $TZ > /etc/timezone; \
-    ln -s /usr/sbin/asterisk /usr/sbin/rasterisk; \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime; \
     wget "http://asterisk.hosting.lv/bin/codec_g729-ast180-gcc4-glibc-x86_64-core2-sse4.so"  \
     -O /usr/lib/asterisk/modules/codec_g729.so;
