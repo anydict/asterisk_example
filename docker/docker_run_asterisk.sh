@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Run instance with number 2 with version image Asterisk 20.5.0
-# bash docker_run_asterisk.sh 2 20.5.0
+# Run instance with number 2 with version image Asterisk 20.7.0
+# bash docker_run_asterisk.sh 2 20.7.0
 
 if [ -z "$1" ]; then
   instance_name=asterisk_extapi-0
@@ -11,7 +11,7 @@ else
 fi
 
 if [ -z "$2" ]; then
-  version=20.5.0
+  version=20.7.0
   # echo "No version" && exit 0
 else
   version=$2
