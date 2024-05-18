@@ -1,8 +1,8 @@
 # asterisk_example
 Scratches for a quick launch of asterisk
 
-Link to the dockerhub image Asterisk 20.8.1 on Ubuntu 22.04:<br>
-https://hub.docker.com/r/anydict/asterisk20ubuntu22
+Link to the dockerhub image Asterisk 20.8.1 on Ubuntu 24.04:<br>
+https://hub.docker.com/r/anydict/asterisk20ubuntu24
 
 
 Easy way for run docker image:
