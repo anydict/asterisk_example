@@ -1,7 +1,7 @@
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:24.04 AS builder
 
 ENV DEBIAN_FRONTEND="noninteractive"
-ENV AST_VERSION 20.7.0
+ENV AST_VERSION 20.8.1
 
 RUN set -ex; \
     apt-get update; \

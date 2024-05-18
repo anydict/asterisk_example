@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Build image Asterisk 20.7.0
+# Build image Asterisk 20.8.1
 
-version=20.7.0
+version=20.8.1
 
 echo Build docker of Asterisk, version: ${version}
 
