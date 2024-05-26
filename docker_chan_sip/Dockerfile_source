@@ -14,7 +14,7 @@ RUN set -ex; \
     cd /usr/src; \
     wget "https://github.com/asterisk/asterisk/archive/refs/tags/${AST_VERSION}.tar.gz"; \
     tar xvf ${AST_VERSION}.tar.gz; \
-    cd asterisk-${AST_VERSION}*/; \
+    cd /usr/src/asterisk-${AST_VERSION}*/; \
     ./configure --disable-xmldoc --without-libxslt --without-dahdi ; \
     make menuselect/menuselect menuselect-tree menuselect.makeopts; \
     menuselect/menuselect --disable BUILD_NATIVE menuselect.makeopts; \
@@ -137,6 +137,7 @@ RUN set -ex; \
     menuselect/menuselect --disable app_sendtext menuselect.makeopts; \
     echo "disable all pjsip"; \
     menuselect/menuselect --disable chan_pjsip menuselect.makeopts; \
+    menuselect/menuselect --disable res_hep_pjsip menuselect.makeopts; \
     menuselect/menuselect --disable res_pjsip menuselect.makeopts; \
     menuselect/menuselect --disable res_pjsip_session menuselect.makeopts; \
     menuselect/menuselect --disable res_pjsip_history menuselect.makeopts; \
