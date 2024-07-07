@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Run instance with number 2 with version image Asterisk 20.8.1
-# bash docker_run_asterisk.sh 2 20.8.1
+# bash docker_run_asterisk_chan_sip.sh 2 20.8.1
 
 if [ -z "$1" ]; then
-  instance_name=asterisk_extapi_pjsip-0
-  # echo "No instance number. Use 0-9. Example docker_run_asterisk 2" && exit 0
+  instance_name=asterisk_docker-0
+  # echo "No instance number. Use 0-9. Example docker_run_asterisk_chan_sip.sh 2"
 else
-  instance_name=asterisk_extapi_pjsip-$1
+  instance_name=asterisk_docker-$1
 fi
 
 if [ -z "$2" ]; then
@@ -48,4 +48,4 @@ ${docker_path} run \
   -v "$host_custom_moh":"$host_custom_moh" \
   -v /tmp/:/tmp/ \
   --name "$instance_name" \
-  anydict/asterisk_pjsip_ubuntu24:"$version"
+  anydict/asterisk20ubuntu22:"$version"
