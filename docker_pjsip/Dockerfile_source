@@ -1,6 +1,6 @@
 FROM ubuntu:22.04 AS builder
 
-ENV AST_VERSION=20.8.1
+ENV AST_VERSION=20.9.2
 
 RUN set -ex; \
     apt-get update; \
@@ -159,6 +159,7 @@ RUN set -ex; \
     menuselect/menuselect --disable app_morsecode menuselect.makeopts; \
     menuselect/menuselect --disable app_sendtext menuselect.makeopts; \
     echo "ENABLE pjsip"; \
+    menuselect/menuselect --enable pbx_config menuselect.makeopts; \
     menuselect/menuselect --enable chan_pjsip menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip menuselect.makeopts; \
     menuselect/menuselect --enable res_sorcery_astdb menuselect.makeopts; \
@@ -248,6 +249,8 @@ COPY --from=builder /usr/lib/libasteriskssl.so.1 \
 
 ENV TZ=Europe/Moscow
 RUN set -ex; \
+    echo "[modules]">>"/etc/asterisk/modules.conf"; \
+    echo "autoload=yes">>"/etc/asterisk/modules.conf"; \
     echo $TZ > /etc/timezone; \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime; \
     wget "http://asterisk.hosting.lv/bin/codec_g729-ast180-gcc4-glibc-x86_64-core2-sse4.so"  \

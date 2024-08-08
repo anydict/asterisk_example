@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Run instance with number 2 with version image Asterisk 20.8.1
-# bash docker_run_asterisk_chan_sip.sh 2 20.8.1
+# Run instance with number 2 with version image Asterisk 20.9.2
+# bash docker_run_asterisk_chan_sip.sh 2 20.9.2
 
 if [ -z "$1" ]; then
   instance_name=asterisk_docker-0
@@ -11,7 +11,7 @@ else
 fi
 
 if [ -z "$2" ]; then
-  version=20.8.1
+  version=20.9.2
   # echo "No version" && exit 0
 else
   version=$2
@@ -32,11 +32,6 @@ host_conf_path="/etc/$instance_name" && mkdir -p "$host_conf_path"
 host_logs_path="/var/log/$instance_name" && mkdir -p "$host_logs_path"
 host_custom_sounds="/var/lib/asterisk/sounds/en/custom" && mkdir -p "$host_custom_sounds"
 host_custom_moh="/var/lib/asterisk/moh" && mkdir -p "$host_custom_moh"
-
-if [ ! -f "/etc/$instance_name/modules.conf" ]; then
-  echo '[modules]' >> "/etc/$instance_name/modules.conf"
-  echo 'autoload=yes' >> "/etc/$instance_name/modules.conf"
-fi
 
 ${docker_path} run \
   -d \
