@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Run instance with number 2 with version image Asterisk 20.9.2
-# bash docker_run_asterisk_pjsip.sh 2 20.9.2
+# Run instance with number 2 with version image Asterisk 20.10.0
+# bash docker_run_asterisk_pjsip.sh 2 20.10.0
 
 if [ -z "$1" ]; then
   instance_name=asterisk_docker_pjsip-0
@@ -11,7 +11,7 @@ else
 fi
 
 if [ -z "$2" ]; then
-  version=20.9.2
+  version=20.10.0
   # echo "No version" && exit 0
 else
   version=$2
@@ -19,6 +19,8 @@ fi
 
 if [ -f "/usr/bin/docker" ]; then
   docker_path="/usr/bin/docker"
+elif [ -f "/run/local/bin/docker" ]; then
+  docker_path="/run/local/bin/docker"
 elif [ -f "/run/host/bin/docker" ]; then
   docker_path="/run/host/bin/docker"
 else

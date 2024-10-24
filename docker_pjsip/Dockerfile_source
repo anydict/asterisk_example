@@ -1,6 +1,6 @@
 FROM ubuntu:22.04 AS builder
 
-ENV AST_VERSION=20.9.2
+ENV AST_VERSION=20.10.0
 
 RUN set -ex; \
     apt-get update; \
@@ -26,7 +26,7 @@ RUN set -ex; \
     menuselect/menuselect --disable app_adsiprog menuselect.makeopts; \
     menuselect/menuselect --disable app_getcpeid menuselect.makeopts; \
     menuselect/menuselect --disable app_celgenuserevent menuselect.makeopts; \
-    echo ">>DISABLE cdr and db/sql modules/apps"; \
+    echo ">>DISABLE cdr and db/sql/unused modules/apps"; \
     menuselect/menuselect --disable app_cdr menuselect.makeopts; \
     menuselect/menuselect --disable app_db menuselect.makeopts; \
     menuselect/menuselect --disable cdr_adaptive_odbc menuselect.makeopts; \
@@ -41,9 +41,6 @@ RUN set -ex; \
     menuselect/menuselect --disable cdr_radius menuselect.makeopts; \
     menuselect/menuselect --disable cdr_manager menuselect.makeopts; \
     menuselect/menuselect --disable func_odbc menuselect.makeopts; \
-    menuselect/menuselect --disable res_config_odbc menuselect.makeopts; \
-    menuselect/menuselect --disable res_odbc menuselect.makeopts; \
-    menuselect/menuselect --disable res_odbc_transaction menuselect.makeopts; \
     menuselect/menuselect --disable cel_odbc menuselect.makeopts; \
     menuselect/menuselect --disable cel_pgsql menuselect.makeopts; \
     menuselect/menuselect --disable cel_tds menuselect.makeopts; \
@@ -51,6 +48,10 @@ RUN set -ex; \
     menuselect/menuselect --disable cel_radius menuselect.makeopts; \
     menuselect/menuselect --disable res_config_sqlite3 menuselect.makeopts; \
     menuselect/menuselect --disable res_config_pgsql menuselect.makeopts; \
+    menuselect/menuselect --disable res_config_odbc menuselect.makeopts; \
+    menuselect/menuselect --disable res_odbc menuselect.makeopts; \
+    menuselect/menuselect --disable res_odbc_transaction menuselect.makeopts; \
+    menuselect/menuselect --disable res_pjsip_notify menuselect.makeopts; \
     menuselect/menuselect --disable func_db menuselect.makeopts; \
     menuselect/menuselect --disable pbx_realtime menuselect.makeopts; \
     echo ">>DISABLE unused codec"; \
@@ -93,7 +94,6 @@ RUN set -ex; \
     menuselect/menuselect --disable res_phoneprov menuselect.makeopts; \
     menuselect/menuselect --disable res_config_ldap menuselect.makeopts; \
     menuselect/menuselect --disable res_smdi menuselect.makeopts; \
-    menuselect/menuselect --disable res_sorcery_memory_cache menuselect.makeopts; \
     menuselect/menuselect --disable res_calendar_ews menuselect.makeopts; \
     menuselect/menuselect --disable res_calendar_icalendar menuselect.makeopts; \
     menuselect/menuselect --disable res_http_media_cache menuselect.makeopts; \
@@ -121,12 +121,10 @@ RUN set -ex; \
     menuselect/menuselect --disable func_groupcount menuselect.makeopts; \
     menuselect/menuselect --disable func_holdintercept menuselect.makeopts; \
     menuselect/menuselect --disable func_aes menuselect.makeopts; \
-    menuselect/menuselect --disable func_devstate menuselect.makeopts; \
     menuselect/menuselect --disable func_pitchshift menuselect.makeopts; \
     menuselect/menuselect --disable func_cut menuselect.makeopts; \
     menuselect/menuselect --disable func_enum menuselect.makeopts; \
     menuselect/menuselect --disable func_dialgroup menuselect.makeopts; \
-    menuselect/menuselect --disable func_sorcery menuselect.makeopts; \
     menuselect/menuselect --disable func_presencestate menuselect.makeopts; \
     menuselect/menuselect --disable func_math menuselect.makeopts; \
     menuselect/menuselect --disable func_periodic_hook menuselect.makeopts; \
@@ -160,8 +158,6 @@ RUN set -ex; \
     echo "ENABLE pjsip"; \
     menuselect/menuselect --enable pbx_config menuselect.makeopts; \
     menuselect/menuselect --enable chan_pjsip menuselect.makeopts; \
-    menuselect/menuselect --enable res_pjsip menuselect.makeopts; \
-    menuselect/menuselect --enable res_sorcery_astdb menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_acl menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_authenticator_digest menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_caller_id menuselect.makeopts; \
@@ -184,6 +180,7 @@ RUN set -ex; \
     menuselect/menuselect --enable res_pjsip_pidf_body_generator menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_mwi_body_generator menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_rfc3329 menuselect.makeopts; \
+    menuselect/menuselect --enable res_pjsip_rfc3326 menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_messaging menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_pidf_digium_body_supplement menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_pidf_eyebeam_body_supplement menuselect.makeopts; \
@@ -201,11 +198,15 @@ RUN set -ex; \
     menuselect/menuselect --enable res_pjsip_pubsub menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_registrar menuselect.makeopts; \
     menuselect/menuselect --enable res_pjsip_outbound_authenticator_digest menuselect.makeopts; \
-    menuselect/menuselect --enable res_pjsip_rfc3326 menuselect.makeopts; \
-    menuselect/menuselect --enable res_pjsip_notify menuselect.makeopts; \
+    menuselect/menuselect --enable res_pjsip menuselect.makeopts; \
+    menuselect/menuselect --enable res_sorcery_astdb menuselect.makeopts; \
+    menuselect/menuselect --enable res_sorcery_config menuselect.makeopts; \
+    menuselect/menuselect --enable res_sorcery_memory_cache menuselect.makeopts; \
     menuselect/menuselect --enable func_pjsip_endpoint menuselect.makeopts; \
     menuselect/menuselect --enable func_pjsip_contact menuselect.makeopts; \
     menuselect/menuselect --enable func_pjsip_aor menuselect.makeopts; \
+    menuselect/menuselect --enable func_devstate menuselect.makeopts; \
+    menuselect/menuselect --enable func_sorcery menuselect.makeopts; \
     make -j$(grep -c ^processor /proc/cpuinfo); \
     make install; \
     make samples; \

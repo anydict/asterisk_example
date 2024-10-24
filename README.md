@@ -2,7 +2,7 @@
 Scratches for a quick launch of asterisk
 
 ### Asterisk CHAN_SIP
-Link to the dockerhub image Asterisk 20.9.2 on Ubuntu 22.04 with CHAN_SIP:<br>
+Link to the dockerhub image Asterisk 20.10.0 on Ubuntu 22.04 with CHAN_SIP:<br>
 https://hub.docker.com/r/anydict/asterisk20ubuntu22
 
 
@@ -14,7 +14,7 @@ Put configs in the directory:<br>
 <code>docker restart asterisk_docker-0</code>
 
 ### Asterisk PJSIP
-Link to the dockerhub image Asterisk 20.9.2 on Ubuntu 22.04 with PJSIP:<br>
+Link to the dockerhub image Asterisk 20.10.0 on Ubuntu 22.04 with PJSIP:<br>
 https://hub.docker.com/r/anydict/asterisk20ubuntu22pjsip
 
 
